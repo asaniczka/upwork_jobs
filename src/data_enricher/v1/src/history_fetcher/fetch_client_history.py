@@ -1,23 +1,21 @@
 """"""
 
 # pylint: disable = wrong-import-position
-from wrapworks.files import load_json
-from wrapworks import cwdtoenv
-from rich import print
-from dotenv import load_dotenv
+import traceback
+
 import httpx
 import ua_generator
-import traceback
-from sqlalchemy.exc import IntegrityError
+from dotenv import load_dotenv
+from rich import print
+from wrapworks import cwdtoenv
 
 load_dotenv()
 cwdtoenv()
 
-from src.upwork_accounts.browser_worker import get_cookies
-from src.sqlalchemy.insert_functions import save_work_history_to_db
-
-from src.models.upwork_models import WorkHistory
 from src.errors.common_errors import NotLoggedIn
+from src.models.upwork_models import WorkHistory
+from src.sqlalchemy.insert_functions import save_work_history_to_db
+from src.upwork_accounts.browser_worker import get_cookies
 
 
 def get_history(cipher: str) -> dict:

@@ -1,12 +1,9 @@
 """"""
 
 from rich import print
-from sqlalchemy.exc import IntegrityError
-
-
+from src.models.db_models import DBFreelancerIdentity
+from src.models.upwork_models import FreelancerIdentity
 from src.sqlalchemy.core_sqlalchemy import SESSIONMAKER
-from src.models.upwork_models import WorkHistory, FreelancerIdentity
-from src.models.db_models import DBUpworkContracts, DBFreelancerIdentity
 
 
 def update_freelancer_in_db(freelancer: FreelancerIdentity):

@@ -1,9 +1,9 @@
 """Tests for fetch client data"""
 
-from unittest import TestCase, main
-from unittest.mock import patch, Mock
-import os
 import json
+import os
+from unittest import TestCase, main
+from unittest.mock import Mock, patch
 
 import httpx
 from dotenv import load_dotenv

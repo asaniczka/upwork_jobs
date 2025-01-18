@@ -3,10 +3,9 @@
 from datetime import datetime
 from typing import Optional
 
-from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 from sqlalchemy import UniqueConstraint
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.types import TIMESTAMP
-from sqlalchemy.sql import func
 
 
 class Base(DeclarativeBase):

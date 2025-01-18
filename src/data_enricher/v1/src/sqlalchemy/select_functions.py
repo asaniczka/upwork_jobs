@@ -2,16 +2,16 @@
 
 # pylint:disable=wrong-import-position
 
-from rich import print
-from wrapworks import cwdtoenv
 from dotenv import load_dotenv
+from rich import print
 from sqlalchemy import select, text
+from wrapworks import cwdtoenv
 
 cwdtoenv()
 load_dotenv()
 
-from src.sqlalchemy.core_sqlalchemy import SESSIONMAKER
 from src.models.db_models import DBFreelancerIdentity
+from src.sqlalchemy.core_sqlalchemy import SESSIONMAKER
 
 
 def get_freelancer_from_db() -> str | None:

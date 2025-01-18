@@ -3,28 +3,24 @@
 # pylint: disable = wrong-import-position
 
 import json
-from datetime import datetime
+import traceback
 
-from wrapworks import cwdtoenv
-from wrapworks.files import dump_json
-from rich import print
-from dotenv import load_dotenv
 import httpx
 import ua_generator
-import traceback
+from dotenv import load_dotenv
 from pydantic import ValidationError
-from selenium.webdriver.common.by import By
+from rich import print
 from selenium.webdriver import Chrome
+from selenium.webdriver.common.by import By
+from wrapworks import cwdtoenv
 
 load_dotenv()
 cwdtoenv()
 
-from src.upwork_accounts.browser_worker import get_cookies
-from src.sqlalchemy.insert_functions import save_work_history_to_db
-from src.upwork_accounts.browser_worker import GetSessionDriver
-
-from src.models.upwork_models import WorkHistory, FreelancerIdentity
 from src.errors.common_errors import NotLoggedIn
+from src.models.upwork_models import FreelancerIdentity, WorkHistory
+from src.sqlalchemy.insert_functions import save_work_history_to_db
+from src.upwork_accounts.browser_worker import get_cookies
 
 
 def get_profile(cipher: str) -> dict:

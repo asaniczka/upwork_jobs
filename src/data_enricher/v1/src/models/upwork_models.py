@@ -1,17 +1,17 @@
-from datetime import datetime
 import json
+from datetime import datetime
 from uuid import uuid4
 
+import pytz
 from pydantic import (
-    BaseModel,
     AliasChoices,
     AliasPath,
+    BaseModel,
     Field,
-    model_validator,
-    field_serializer,
     HttpUrl,
+    field_serializer,
+    model_validator,
 )
-import pytz
 
 
 class UpworkClient(BaseModel):

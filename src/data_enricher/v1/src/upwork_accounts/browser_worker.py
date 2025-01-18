@@ -6,29 +6,27 @@
       parse the content.
 """
 
-import os
 import json
-import time
-from pathlib import Path
-from contextlib import contextmanager
+import os
 import shutil
+import time
+from contextlib import contextmanager
+from pathlib import Path
 
-from rich import print
-from wrapworks import timeit, cwdtoenv
-from dotenv import load_dotenv
 import undetected_chromedriver as uc
+from dotenv import load_dotenv
+from rich import print
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
-
+from selenium.webdriver.support.ui import WebDriverWait
+from wrapworks import cwdtoenv, timeit
 
 cwdtoenv()
 load_dotenv()
 
 from src.errors.common_errors import NotLoggedIn
-
 
 SELENIUM_CACHE_FOLDER = Path(Path.cwd(), "src", "upwork_accounts", "temp", "chrome")
 SELENIUM_CACHE_FOLDER.mkdir(parents=True, exist_ok=True)

@@ -1,8 +1,6 @@
-import json
-
+import requests
 from curl_cffi import requests
 from rich import print
-import requests
 
 url = "https://www.upwork.com/api/graphql/v1"
 

@@ -2,12 +2,12 @@
 
 # pylint:disable=wrong-import-position
 
-from unittest import TestCase, main
-import os
 import json
+import os
+from unittest import TestCase, main
 
-from wrapworks import cwdtoenv
 from dotenv import load_dotenv
+from wrapworks import cwdtoenv
 
 load_dotenv()
 cwdtoenv()

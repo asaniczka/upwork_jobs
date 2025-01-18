@@ -5,25 +5,23 @@
 
 """
 
-import os
-from datetime import datetime
 import asyncio
 import json
+import os
 import random
+from datetime import datetime
 
+import dotenv
+import httpx
 from pydantic import (
-    BaseModel,
-    Field,
     AliasChoices,
     AliasPath,
-    model_validator,
+    BaseModel,
+    Field,
     field_serializer,
     field_validator,
+    model_validator,
 )
-import httpx
-import requests
-import ua_generator
-import dotenv
 
 dotenv.load_dotenv()
 

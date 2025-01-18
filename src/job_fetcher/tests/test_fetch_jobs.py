@@ -4,8 +4,8 @@
 
 from unittest import TestCase, main
 
-from wrapworks import cwdtoenv
 from dotenv import load_dotenv
+from wrapworks import cwdtoenv
 
 cwdtoenv()
 load_dotenv()

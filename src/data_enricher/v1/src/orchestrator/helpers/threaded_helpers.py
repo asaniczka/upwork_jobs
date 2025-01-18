@@ -4,21 +4,18 @@ Module to manually trigger data augmentation
 
 # pylint:disable=wrong-import-position
 from rich import print
-
+from src.errors.common_errors import NotLoggedIn
+from src.formatter.format_cipher import get_cipher
+from src.history_fetcher.fetch_client_history import handle_single_client
 from src.history_fetcher.fetch_freelancer_history import (
-    handle_freelancer_profile,
     handle_freelancer_profile_rendered,
 )
+from src.postgres.update_functions import update_hire_history_as_done
 from src.sqlalchemy.update_functions import (
     mark_freelancer_as_scraped,
     update_freelancer_in_db,
 )
-from src.postgres.update_functions import update_hire_history_as_done
 from src.upwork_accounts.browser_handlers import do_login
-from src.history_fetcher.fetch_client_history import handle_single_client
-from src.formatter.format_cipher import get_cipher
-
-from src.errors.common_errors import NotLoggedIn
 
 
 def handler_freelancer_history_threaded(cipher: str):

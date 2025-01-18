@@ -4,38 +4,33 @@ Module to manually trigger data augmentation
 
 # pylint:disable=wrong-import-position
 
-import json
-import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from wrapworks import cwdtoenv
 from dotenv import load_dotenv
 from rich import print
+from wrapworks import cwdtoenv
 
 load_dotenv()
 cwdtoenv()
 
+from src.attribute_extractor.get_attributes import entry_extract_attributes
+from src.errors.common_errors import NotLoggedIn
+from src.history_fetcher.fetch_freelancer_history import (
+    handle_freelancer_profile_rendered,
+)
+from src.orchestrator.helpers.threaded_helpers import handler_hire_history_threaded
 from src.postgres.select_functions import (
     get_pending_client_data_row,
     get_pending_hire_history_row,
 )
 from src.postgres.update_functions import update_row, update_row_as_done
-from src.upwork_accounts.browser_handlers import get_page, do_login
-from src.attribute_extractor.get_attributes import entry_extract_attributes
 from src.sqlalchemy.select_functions import get_batch_freelancers_from_db
 from src.sqlalchemy.update_functions import (
-    update_freelancer_in_db,
     mark_freelancer_as_scraped,
+    update_freelancer_in_db,
 )
-from src.orchestrator.helpers.threaded_helpers import (
-    handler_freelancer_history_threaded,
-    handler_hire_history_threaded,
-)
-from src.history_fetcher.fetch_freelancer_history import (
-    handle_freelancer_profile_rendered,
-)
+from src.upwork_accounts.browser_handlers import do_login, get_page
 from src.upwork_accounts.browser_worker import GetSessionDriver
-from src.errors.common_errors import NotLoggedIn
 
 
 def client_data_executor():

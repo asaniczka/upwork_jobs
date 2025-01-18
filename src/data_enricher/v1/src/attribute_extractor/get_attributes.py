@@ -6,31 +6,28 @@
 
 # pylint:disable=wrong-import-position
 
-import sys
 import os
-from datetime import datetime
-import re
 
-from pydantic import ValidationError
-import httpx
-from rich import print
-from wrapworks import timeit, cwdtoenv
-from dotenv import load_dotenv
 import chompjs
+import httpx
+from dotenv import load_dotenv
+from pydantic import ValidationError
+from rich import print
+from wrapworks import cwdtoenv
 
 cwdtoenv()
 load_dotenv()
 
-from src.upwork_accounts.browser_handlers import get_page
-from src.models.upwork_models import PostingAttributes, OPENAPI_SCHEMA
 from src.models.genai_models import (
-    ValidLLMModels,
     LLM_COST_PER_TOKEN,
+    AIResponse,
     LLMMessage,
     LLMMessageLog,
-    AIResponse,
     LLMRoles,
+    ValidLLMModels,
 )
+from src.models.upwork_models import OPENAPI_SCHEMA, PostingAttributes
+from src.upwork_accounts.browser_handlers import get_page
 
 # ----------------------------------------
 #               WORKERS

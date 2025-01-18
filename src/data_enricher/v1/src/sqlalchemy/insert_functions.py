@@ -2,11 +2,9 @@
 
 from rich import print
 from sqlalchemy.exc import IntegrityError
-
-
+from src.models.db_models import DBUpworkContracts
+from src.models.upwork_models import WorkHistory
 from src.sqlalchemy.core_sqlalchemy import SESSIONMAKER
-from src.models.upwork_models import WorkHistory, FreelancerIdentity
-from src.models.db_models import DBUpworkContracts, DBFreelancerIdentity
 
 
 def save_work_history_to_db(work_history: WorkHistory):

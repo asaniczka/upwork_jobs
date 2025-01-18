@@ -1,10 +1,11 @@
 """Handles retrival of an Auth Token"""
 
+import json
 import os
+
 import httpx
 from dotenv import load_dotenv
 from rich import print
-import json
 
 load_dotenv()
 

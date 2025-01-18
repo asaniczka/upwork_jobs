@@ -2,14 +2,12 @@ import time
 
 from bs4 import BeautifulSoup
 from rich import print
-
-
 from src.upwork_accounts.browser_worker import (
-    save_cookies,
     get_cookies,
     get_driver,
     login,
     restart_session,
+    save_cookies,
 )
 
 
