@@ -1,7 +1,10 @@
-from curl_cffi import requests
-from cfscrape import create_scraper
+import json
 
-url = "https://www.upwork.com/api/graphql/v1??__cf_chl_tk=row.I__gJbUo5EPPjryrN_rM1xmyo_AB1_JYDnZYY80-1724770094-0.0.1.1-5716"
+from curl_cffi import requests
+from rich import print
+import requests
+
+url = "https://www.upwork.com/api/graphql/v1"
 
 payload = {
     "query": """
@@ -14,53 +17,53 @@ payload = {
             offset
             count
           }
-
+          
     facets {
-      jobType
+      jobType 
     {
       key
       value
     }
-
-      workload
+  
+      workload 
     {
       key
       value
     }
-
-      clientHires
+  
+      clientHires 
     {
       key
       value
     }
-
-      durationV3
+  
+      durationV3 
     {
       key
       value
     }
-
-      amount
+  
+      amount 
     {
       key
       value
     }
-
-      contractorTier
+  
+      contractorTier 
     {
       key
       value
     }
-
-      contractToHire
+  
+      contractToHire 
     {
       key
       value
     }
-
-
+  
+      
     }
-
+  
           results {
             id
             title
@@ -74,7 +77,7 @@ payload = {
               freeText
               highlighted
             }
-
+            
             jobTile {
               job {
                 id
@@ -88,7 +91,7 @@ payload = {
                 sourcingTimestamp
                 createTime
                 publishTime
-
+                
                 hourlyEngagementDuration {
                   rid
                   label
@@ -125,17 +128,18 @@ payload = {
     },
 }
 headers = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:129.0) Gecko/20100101 Firefox/129.0",
     "Accept": "*/*",
     "Accept-Language": "en-GB,en;q=0.7,en-US;q=0.3",
     "Accept-Encoding": "gzip, deflate, br, zstd",
     "Referer": "https://www.upwork.com/nx/search/jobs/?page=2",
     "X-Upwork-Accept-Language": "en-US",
     "Content-Type": "application/json",
-    "Authorization": "Bearer oauth2v2_48f466dac6fdaf5fd1669cb3d7df40d6",
+    "Authorization": "Bearer oauth2v2_74738b726aeb9ed7c364cb855fd61d6b",
+    "Origin": "https://www.upwork.com",
+    "Connection": "keep-alive",
 }
 
-
-scraper = cfscrape.create_scraper()
-response = scraper.post(url, json=payload, headers=headers)
+response = requests.post(url, json=payload, headers=headers)
 
 print(response.text)
