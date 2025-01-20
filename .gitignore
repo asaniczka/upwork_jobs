@@ -2,3 +2,4 @@
 .venv
 layer
 __pycache__
+temp*

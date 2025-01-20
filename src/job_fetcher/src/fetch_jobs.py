@@ -8,7 +8,7 @@
 import asyncio
 import json
 import os
-import random
+import subprocess
 from datetime import datetime
 
 import dotenv
@@ -162,24 +162,26 @@ def get_auth_token(use_authorizer=False) -> tuple[str, list[dict]]:
     return data.get("token"), data.get("cookies")
 
 
-def download_proxies() -> list[str]:
-    res = httpx.get(os.getenv("PROXY_URL"), timeout=5)
-    return res.text.split()
+def request_to_curl(method, url, headers=None, params=None, data=None):
+    method = method.upper()
+    curl_cmd = f"curl -X {method} '{url}'"
 
+    if headers:
+        for key, value in headers.items():
+            curl_cmd += f" -H '{key}: {value}'"
 
-def get_proxy(proxies: list[str]) -> str:
-    """"""
+    if params:
+        param_str = "&".join([f"{key}={value}" for key, value in params.items()])
+        curl_cmd += f" '{url}?{param_str}'"
 
-    print("Getting a new proxy")
+    if data:
+        curl_cmd += f" -d '{data}'"
 
-    proxy = random.choice(proxies)
-    ip, port, user, password = proxy.split(":")
-
-    return "http://" + user + ":" + password + "@" + ip + ":" + port
+    return curl_cmd
 
 
 def collect_jobs(
-    auth_token: str, proxies: list[str], cookies: list[dict]
+    auth_token: str,
 ) -> dict | None:
     """"""
 
@@ -318,28 +320,12 @@ def collect_jobs(
         },
     }
 
-    retries = 0
-    while retries < 10:
-        try:
-            response = httpx.post(
-                url,
-                json=payload,
-                headers=headers,
-                timeout=10,
-                cookies={item["name"]: item["value"] for item in cookies},
-            )
+    command = request_to_curl(
+        "POST", url=url, headers=headers, data=json.dumps(payload)
+    )
 
-            if response.status_code == 407:
-                raise RuntimeError("Invalid Proxy")
-            if response.status_code != 200:
-                print(response.text)
-            break
-        except (RuntimeError, httpx.ProxyError):
-            print("Error on proxy. Retrying")
-            retries += 1
-            continue
-
-    return response.json()
+    res = subprocess.run(command, shell=True)
+    return res
 
 
 async def upload_to_db(job: Job, client: httpx.Client):
@@ -423,7 +409,7 @@ def lambda_handler(event, context):
             use_authorizor = retries > 0
             auth_token, cookies = get_auth_token(use_authorizor)
             proxies = download_proxies()
-            raw_feed = collect_jobs(auth_token, proxies, cookies)
+            raw_feed = collect_jobs(auth_token)
             jobs = JobList(**raw_feed)
             break
         except Exception as e:
@@ -442,7 +428,9 @@ def lambda_handler(event, context):
 
 
 if __name__ == "__main__":
-    data = lambda_handler(1, 1)
-    print(data)
+    # data = lambda_handler(1, 1)
+    # print(data)
 
-    # get_auth_token(use_authorizer=False)
+    token = ""
+    data = collect_jobs(token)
+    print(data)

@@ -194,5 +194,6 @@ def lambda_handler(event: dict, context):
 
 
 if __name__ == "__main__":
-    data = lambda_handler({"secret": os.getenv("AUTH_SECRET")}, {})
-    print(data)
+    # data = lambda_handler({"secret": os.getenv("AUTH_SECRET")}, {})
+    token, cookies = cookie_handler()
+    print(token)
